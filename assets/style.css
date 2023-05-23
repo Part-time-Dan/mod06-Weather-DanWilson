@@ -1,0 +1,42 @@
+.sidebar {
+    margin-left: 10px;
+    border-right: 2px solid lightgray;
+    padding: 4px;
+}
+
+#city-name {
+    border-radius: 5px;
+}
+
+#search-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+    min-width: 100%;
+}
+
+.city-btn {
+    display: flex;
+    justify-content: center;
+    background-color: lightblue;
+    color: black;
+    margin-top: 4px;
+    min-width: 100%;
+}
+
+h3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    margin-top: 30px;
+
+}
+
+.search-history {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    margin-top: 30px;
+}

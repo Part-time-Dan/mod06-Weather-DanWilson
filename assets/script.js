@@ -18,7 +18,7 @@ function getHistory() {
 };
 
 getHistory();
-console.log(cityArray);
+// console.log(cityArray);
 
 //converts recalled local storage array to buttons on document
 function showHistory() {
@@ -40,9 +40,9 @@ showHistory();
 search.addEventListener("click", function() {
     //javascript keeps trying to force .value into .ariaValue???
     var city = document.getElementById("city-name").value.trim().toUpperCase();
-    console.log(city);
+    // console.log(city);
     if(!city) {
-        console.log("no");
+        alert("Type a city name into the search field");
     } else {
         //creates and appends button as search history
         var cityButton = document.createElement("button")
@@ -60,6 +60,9 @@ search.addEventListener("click", function() {
         });
 
     localStorage.setItem("city" , JSON.stringify(newArray));
+
+    //logic for history list HERE
+
 
     function getGeo() {
 
@@ -96,11 +99,14 @@ search.addEventListener("click", function() {
                         var cityName = currentWeather.name;
                         // console.log(currentWeather.name + " city");
 
-                        var date = "Date (local): " + (dayjs().format('MM/DD/YYYY'));
+                        var date = "Date: " + (dayjs().format('MM/DD/YYYY'));
                         // console.log(dayjs(unix).format('MM/DD/YY') + " local date");
 
+                        
                         var icon = currentWeather.weather[0].icon;
-                        // console.log(currentWeather.weather[0].icon + " icon");
+                        // console.log(currentWeather.weather[0].icon);
+                        var iconURL = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
+                        // console.log(iconURL);
 
                         //unicode character for degrees symbol
                         var temp = "Tempurature: " + currentWeather.main.temp + ' \u00B0F';
@@ -120,14 +126,22 @@ search.addEventListener("click", function() {
 
                             var locDate = document.createElement("p");
                             locDate.textContent = date;
+                            locDate.setAttribute("id", "normal");
                             current.appendChild(locDate);
 
                             var city = document.createElement("p");
-                            city.textContent = cityName + "   " + icon;
+                            city.textContent = cityName;
+                            city.setAttribute("id", "style");
+                            var iconImg = document.createElement("img");
+                            iconImg.setAttribute("src", iconURL);
                             locDate.appendChild(city);
+                            city.appendChild(iconImg);
+
+                            
 
                             var nowTemp = document.createElement("p");
                             nowTemp.textContent = temp;
+                            nowTemp.setAttribute("id", "normal");
                             city.appendChild(nowTemp);
 
                             var nowHum = document.createElement("p");
@@ -157,10 +171,13 @@ search.addEventListener("click", function() {
                                 var forecastArray = nextWeather.list
                                 // console.log(forecastArray)
                                 //iterate every 8 items in the list array inside the API to get data in 12 hour increments
-                                for(let i = 1; i < forecastArray.length; i += 8) {
+                                for(let i = 5; i < forecastArray.length; i += 8) {
                                     //date, icon, temp, windspeed, humidity
                                     var date = forecastArray[i].dt_txt;
+
                                     var icon = forecastArray[i].weather[0].icon;
+                                    var iconURL = "https://openweathermap.org/img/wn/" + icon + ".png";
+
                                     var temp = forecastArray[i].main.temp;
                                     var windspeed = forecastArray[i].wind.speed;
                                     var humi = forecastArray[i].main.humidity;
@@ -171,8 +188,10 @@ search.addEventListener("click", function() {
                                     fiveCards.appendChild(cardDate);
 
                                     var cardIcon = document.createElement('p');
-                                    cardIcon.textContent = icon
+                                    var iconImg = document.createElement("img");
+                                    iconImg.setAttribute("src", iconURL);
                                     cardDate.appendChild(cardIcon);
+                                    cardIcon.appendChild(iconImg);
 
                                     var cardTemp = document.createElement('p');
                                     cardTemp.textContent = "Temp: " + temp + "\u00B0F";
@@ -208,25 +227,3 @@ search.addEventListener("click", function() {
     
 });
 
-
-
-
-
-
-                        //plug the icon API into the data function so icons display when called
-                        // function getIcon() {
-                        //     var iconNow = 'https://api.openweathermap.org/data/2.5/weather?lat=' + geoLat + '&lon=' + geoLon + '&units=imperial&appid=' + weatherKey;
-                        //     console.log(iconNow);
-    
-                        //     fetch(currentWeatherURL, {
-            
-                        //     })
-                        //     .then(function (response) {
-                        //         return response.json();
-                        //     })
-                        //     .then(function (currentWeather) {
-                        //         console.log(currentWeather);
-
-                        // });
-
-                        // getIcon();

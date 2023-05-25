@@ -3,7 +3,7 @@ header {
     justify-content: center;
     padding: 2rem;
     border-bottom: 2px solid lightgray;
-    background-color: rgb(186, 186, 223);
+    background-image: linear-gradient(rgb(151, 185, 218), rgb(119, 144, 182));
     color: rgb(45, 46, 107);
 }
 
@@ -27,7 +27,7 @@ header {
 .city-btn {
     display: flex;
     justify-content: center;
-    background-color: lightblue;
+    background-color: rgb(173, 200, 212);
     color: black;
     margin-top: 4px;
     min-width: 100%;
@@ -39,6 +39,8 @@ h2 {
     align-items: center;
     padding: 0px;
     margin-top: 30px;
+    font-size: 1.5rem;
+    color: gray;
 
 }
 
@@ -50,14 +52,33 @@ h2 {
     margin-top: 30px;
 }
 
-.main-card {
+h3 {
     display: flex;
-    border-bottom: 2px solid lightgray;
-    line-height: 3rem;
+    justify-content: center;
+    margin-top: 1rem;
 }
 
-h3 {
-    margin-top: 1rem;
+
+.main-card {
+    display: flex;
+    margin: 3px;
+    padding: 0.3rem;
+    border: 1px solid grey;
+    border-radius: 8px;
+    box-shadow: 3px 3px 4px lightgray;
+    background-image: linear-gradient(rgb(74, 74, 139), rgb(97, 131, 151));
+    color: whitesmoke;
+    line-height: 2rem;
+}
+
+#style {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+#normal {
+    font-size: 1.2rem;
+    font-weight: 400;
 }
 
 h4 {
@@ -83,6 +104,16 @@ h4 {
     padding: 0.3rem;
     padding-right: 4rem;
     border: 1px solid grey;
-    border-radius: 5px;
-    box-shadow: 3px 3px 5px lightgray;
+    border-radius: 8px;
+    box-shadow: 3px 3px 4px lightgray;
+    background-image: linear-gradient(rgb(74, 74, 139), rgb(97, 131, 151));
+    color: whitesmoke;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    color: gray;
+    position: relative;
+    margin: 40px;
 }

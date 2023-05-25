@@ -1,3 +1,12 @@
+header {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    border-bottom: 2px solid lightgray;
+    background-color: rgb(186, 186, 223);
+    color: rgb(45, 46, 107);
+}
+
 .sidebar {
     margin-left: 10px;
     border-right: 2px solid lightgray;
@@ -24,7 +33,7 @@
     min-width: 100%;
 }
 
-h3 {
+h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,4 +48,41 @@ h3 {
     align-items: center;
     padding: 0px;
     margin-top: 30px;
+}
+
+.main-card {
+    display: flex;
+    border-bottom: 2px solid lightgray;
+    line-height: 3rem;
+}
+
+h3 {
+    margin-top: 1rem;
+}
+
+h4 {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.cards {
+    display: flex;  
+    flex-wrap: wrap;
+    justify-content: space-evenly; 
+}
+
+.cards p {
+    line-height: 2rem;
+}
+
+.cards div {
+    display: flex;
+    flex-direction: column;
+    margin: 3px;
+    padding: 0.3rem;
+    padding-right: 4rem;
+    border: 1px solid grey;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px lightgray;
 }

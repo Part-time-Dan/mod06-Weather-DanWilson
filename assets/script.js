@@ -1,17 +1,19 @@
 var weatherKey = config.weather_key;
 var cityKey = config.city_key;
+var forecastKey = config.forecast_key;
 
 var cityArray = [];
 
 var search = document.getElementById("search-btn");
 var list = document.getElementById("city-list");
 var currentCard = document.getElementById("current");
+var fiveCards = document.getElementById("five-day");
 
 //retrieves stored user inputs from local and overwrites empty array with stored value object array
 function getHistory() {
     var searchHistory = JSON.parse(localStorage.getItem("city"));
     if(searchHistory !== null) {
-        cityArray = searchHistory;
+        cityArray = searchHistory.reverse();
     }
 };
 
@@ -37,7 +39,7 @@ showHistory();
 //gets city name as text value on click of search button
 search.addEventListener("click", function() {
     //javascript keeps trying to force .value into .ariaValue???
-    var city = document.getElementById("city-name").value.trim('').toUpperCase();
+    var city = document.getElementById("city-name").value.trim().toUpperCase();
     console.log(city);
     if(!city) {
         console.log("no");
@@ -47,8 +49,9 @@ search.addEventListener("click", function() {
         cityButton.setAttribute("class", "col-5 city-btn btn btn-primary button");
     }
     cityButton.textContent = city;
-    list.appendChild(cityButton);
+    list.prepend(cityButton);
 
+    //found array filter function on stackoverflow
     cityArray.push(city);
     var newArray = cityArray.filter(function(a) {
             if(!this[a]) {
@@ -61,8 +64,8 @@ search.addEventListener("click", function() {
     function getGeo() {
 
         var geoCode = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=5&appid=' + cityKey;
-        console.log(city + " geo check");
-        console.log(geoCode);
+        // console.log(city + " geo check");
+        // console.log(geoCode);
     
         fetch(geoCode, {
         })
@@ -70,15 +73,16 @@ search.addEventListener("click", function() {
             return response.json();
         })
         .then(function (geoData) {
-            console.log(geoData);
-            var geoLat = geoData[0].lat.toString();//get these as variables
+            // console.log(geoData);
+            //make geo variables for the API call for city name
+            var geoLat = geoData[0].lat.toString();
             var geoLon = geoData[0].lon.toString();
-            console.log(geoLat + '  ' + geoLon);
+            // console.log(geoLat + '  ' + geoLon);
 
             function findCity() {
-                    //query weather by latitude and longitude, query convert units to imperial (fahrenheit)
+                    //query weather by latitude and longitude, query convert units to imperial (fahrenheit/miles)
                     var currentWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?lat=' + geoLat + '&lon=' + geoLon + '&units=imperial&appid=' + weatherKey;
-                    console.log(currentWeatherURL);
+                    // console.log(currentWeatherURL);
     
                     fetch(currentWeatherURL, {
     
@@ -87,36 +91,28 @@ search.addEventListener("click", function() {
                         return response.json();
                     })
                     .then(function (currentWeather) {
-                        console.log(currentWeather);
+                        // console.log(currentWeather);
                         var unix = dayjs.unix(currentWeather.sys.sunset); //only sunset time works to get date by location??
                         var cityName = currentWeather.name;
-                        console.log(currentWeather.name + " city");
+                        // console.log(currentWeather.name + " city");
 
-                        var date = "Date (local): " + (dayjs(unix).format('MM/DD/YY'));
-                        console.log(dayjs(unix).format('MM/DD/YY') + " local date");
+                        var date = "Date (local): " + (dayjs().format('MM/DD/YYYY'));
+                        // console.log(dayjs(unix).format('MM/DD/YY') + " local date");
 
                         var icon = currentWeather.weather[0].icon;
-                        console.log(currentWeather.weather[0].icon + " icon");
+                        // console.log(currentWeather.weather[0].icon + " icon");
 
                         //unicode character for degrees symbol
                         var temp = "Tempurature: " + currentWeather.main.temp + ' \u00B0F';
-                        console.log(currentWeather.main.temp + ' \u00B0F' + " temp");
+                        // console.log(currentWeather.main.temp + ' \u00B0F' + " temp");
 
                         var humi = "Humidity: " + currentWeather.main.humidity + "%";
-                        console.log(currentWeather.main.humidity + " humidity");
+                        // console.log(currentWeather.main.humidity + " humidity");
 
                         var wind = "Windspeed: " + currentWeather.wind.speed + " miles/hour"
-                        console.log(currentWeather.wind.speed + " windspeed");
+                        // console.log(currentWeather.wind.speed + " windspeed");
 
-
-                        //plug the icon API into the data function so icons display when called
-                        function getIcon() {
-
-                        }
-
-                        getIcon();
-
-                        function showData() {
+                        function mainCard() {
 
                             //clears card so weather data doesn't keep appending itself each search
                             document.getElementById("current").innerHTML="";
@@ -143,8 +139,62 @@ search.addEventListener("click", function() {
                             nowHum.appendChild(nowWind);
                             
                         }
-                        showData();
-                    });
+                        mainCard();
+
+                        function forecastCards() {
+                            //query count=40 to get enough data to generate 5 days
+                            var nextWeatherURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + geoLat + '&lon=' + geoLon + '&cnt=40&units=imperial&appid=' + forecastKey;
+                            // console.log(nextWeatherURL);
+
+                            fetch(nextWeatherURL, {
+    
+                            })
+                            .then(function (response) {
+                                return response.json();
+                            })
+                            .then(function (nextWeather) {
+                                fiveCards.innerHTML="";
+                                var forecastArray = nextWeather.list
+                                // console.log(forecastArray)
+                                //iterate every 8 items in the list array inside the API to get data in 12 hour increments
+                                for(let i = 1; i < forecastArray.length; i += 8) {
+                                    //date, icon, temp, windspeed, humidity
+                                    var date = forecastArray[i].dt_txt;
+                                    var icon = forecastArray[i].weather[0].icon;
+                                    var temp = forecastArray[i].main.temp;
+                                    var windspeed = forecastArray[i].wind.speed;
+                                    var humi = forecastArray[i].main.humidity;
+                                    // console.log(date, icon, temp, windspeed, humi);
+
+                                    var cardDate = document.createElement('div');
+                                    cardDate.textContent = "Date: " + date.slice(5, 10);
+                                    fiveCards.appendChild(cardDate);
+
+                                    var cardIcon = document.createElement('p');
+                                    cardIcon.textContent = icon
+                                    cardDate.appendChild(cardIcon);
+
+                                    var cardTemp = document.createElement('p');
+                                    cardTemp.textContent = "Temp: " + temp + "\u00B0F";
+                                    cardIcon.appendChild(cardTemp);
+
+                                    var cardHum = document.createElement('p');
+                                    cardHum.textContent = "Humidity: " + humi + "%";
+                                    cardTemp.appendChild(cardHum);
+
+                                    var cardWind = document.createElement('p');
+                                    cardWind.textContent = "Windspeed: " + windspeed + " mi/hr";
+                                    cardHum.appendChild(cardWind);   
+
+                                };
+                                
+                            });
+
+
+                        }
+                        forecastCards();
+                        
+                });
                     
             
             }
@@ -162,3 +212,21 @@ search.addEventListener("click", function() {
 
 
 
+
+                        //plug the icon API into the data function so icons display when called
+                        // function getIcon() {
+                        //     var iconNow = 'https://api.openweathermap.org/data/2.5/weather?lat=' + geoLat + '&lon=' + geoLon + '&units=imperial&appid=' + weatherKey;
+                        //     console.log(iconNow);
+    
+                        //     fetch(currentWeatherURL, {
+            
+                        //     })
+                        //     .then(function (response) {
+                        //         return response.json();
+                        //     })
+                        //     .then(function (currentWeather) {
+                        //         console.log(currentWeather);
+
+                        // });
+
+                        // getIcon();

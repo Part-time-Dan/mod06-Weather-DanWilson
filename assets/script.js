@@ -29,18 +29,27 @@ function showHistory() {
         cityButton.setAttribute("class", "col-5 city-btn btn btn-primary button", "index", i); 
         cityButton.textContent = city;
         list.appendChild(cityButton);   
-        
+    
     }
+
 };
 
 showHistory();
+
+// cityButton.addEventListener("click", getHistory)
+
+
+// const historyButton = document.querySelector("new-button");
+// cityButton.addEventListener("click", getHistory);
+// console.log(cityButton)
+
 
 
 //gets city name as text value on click of search button
 search.addEventListener("click", function() {
     //javascript keeps trying to force .value into .ariaValue???
-    var city = document.getElementById("city-name").value.trim().toUpperCase();
-    // console.log(city);
+    var city = document.getElementById("city-name").value.toUpperCase();
+    console.log(city);
     if(!city) {
         alert("Type a city name into the search field");
     } else {
@@ -62,6 +71,7 @@ search.addEventListener("click", function() {
     localStorage.setItem("city" , JSON.stringify(newArray));
 
     //logic for history list HERE
+
 
 
     function getGeo() {

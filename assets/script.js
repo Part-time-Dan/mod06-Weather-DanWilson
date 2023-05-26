@@ -48,7 +48,6 @@ showHistory();
 search.addEventListener("click", function() {
 
     var city = document.getElementById("city-name").value.toUpperCase();
-    console.log(city);
     if(!city) {
         alert("Type a city name into the search field");
     } else {
@@ -84,7 +83,7 @@ search.addEventListener("click", function() {
             //make geo variables for the API call for city name
             var geoLat = geoData[0].lat.toString();
             var geoLon = geoData[0].lon.toString();
-
+            
             function findCity() {
                     //query weather by latitude and longitude, query convert units to imperial (fahrenheit/miles)
                     var currentWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?lat=' + geoLat + '&lon=' + geoLon + '&units=imperial&appid=' + weatherKey;

@@ -74,7 +74,7 @@ search.addEventListener("click", function() {
 
     function getGeo() {
 
-        var geoCode = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=5&appid=' + cityKey;   
+        var geoCode = 'https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=5&appid=' + cityKey;   
         fetch(geoCode, {
         })
         .then(function (response) {

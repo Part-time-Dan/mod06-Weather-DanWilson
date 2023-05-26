@@ -1,6 +1,6 @@
-var weatherKey = config.weather_key;
-var cityKey = config.city_key;
-var forecastKey = config.forecast_key;
+var weatherKey = '9288aa53ce4e292ae8cd48bfe4aca237';
+var cityKey = 'fae3c5fec4629e3f1859b40e71eeda8b';
+var forecastKey = '76203aa5c955cbdf7bbea376e95150eb';
 
 var cityArray = [];
 
@@ -18,7 +18,6 @@ function getHistory() {
 };
 
 getHistory();
-// console.log(cityArray);
 
 //converts recalled local storage array to buttons on document
 function showHistory() {
@@ -47,7 +46,7 @@ showHistory();
 
 //gets city name as text value on click of search button
 search.addEventListener("click", function() {
-    //javascript keeps trying to force .value into .ariaValue???
+
     var city = document.getElementById("city-name").value.toUpperCase();
     console.log(city);
     if(!city) {
@@ -67,7 +66,6 @@ search.addEventListener("click", function() {
                 this[a] = 1; return a;
             }}, {
         });
-
     localStorage.setItem("city" , JSON.stringify(newArray));
 
     //logic for history list HERE
@@ -76,64 +74,42 @@ search.addEventListener("click", function() {
 
     function getGeo() {
 
-        var geoCode = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=5&appid=' + cityKey;
-        // console.log(city + " geo check");
-        // console.log(geoCode);
-    
+        var geoCode = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=5&appid=' + cityKey;   
         fetch(geoCode, {
         })
         .then(function (response) {
             return response.json();
         })
         .then(function (geoData) {
-            // console.log(geoData);
             //make geo variables for the API call for city name
             var geoLat = geoData[0].lat.toString();
             var geoLon = geoData[0].lon.toString();
-            // console.log(geoLat + '  ' + geoLon);
 
             function findCity() {
                     //query weather by latitude and longitude, query convert units to imperial (fahrenheit/miles)
                     var currentWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?lat=' + geoLat + '&lon=' + geoLon + '&units=imperial&appid=' + weatherKey;
-                    // console.log(currentWeatherURL);
-    
                     fetch(currentWeatherURL, {
-    
                     })
                     .then(function (response) {
                         return response.json();
                     })
                     .then(function (currentWeather) {
-                        // console.log(currentWeather);
-                        var unix = dayjs.unix(currentWeather.sys.sunset); //only sunset time works to get date by location??
+                        // var unix = dayjs.unix(currentWeather.sys.sunset);
                         var cityName = currentWeather.name;
-                        // console.log(currentWeather.name + " city");
-
                         var date = "Date: " + (dayjs().format('MM/DD/YYYY'));
-                        // console.log(dayjs(unix).format('MM/DD/YY') + " local date");
-
-                        
                         var icon = currentWeather.weather[0].icon;
-                        // console.log(currentWeather.weather[0].icon);
                         var iconURL = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
-                        // console.log(iconURL);
 
                         //unicode character for degrees symbol
                         var temp = "Tempurature: " + currentWeather.main.temp + ' \u00B0F';
-                        // console.log(currentWeather.main.temp + ' \u00B0F' + " temp");
-
                         var humi = "Humidity: " + currentWeather.main.humidity + "%";
-                        // console.log(currentWeather.main.humidity + " humidity");
-
                         var wind = "Windspeed: " + currentWeather.wind.speed + " miles/hour"
-                        // console.log(currentWeather.wind.speed + " windspeed");
 
                         function mainCard() {
 
                             //clears card so weather data doesn't keep appending itself each search
                             document.getElementById("current").innerHTML="";
                             
-
                             var locDate = document.createElement("p");
                             locDate.textContent = date;
                             locDate.setAttribute("id", "normal");
@@ -146,8 +122,6 @@ search.addEventListener("click", function() {
                             iconImg.setAttribute("src", iconURL);
                             locDate.appendChild(city);
                             city.appendChild(iconImg);
-
-                            
 
                             var nowTemp = document.createElement("p");
                             nowTemp.textContent = temp;
@@ -168,10 +142,8 @@ search.addEventListener("click", function() {
                         function forecastCards() {
                             //query count=40 to get enough data to generate 5 days
                             var nextWeatherURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + geoLat + '&lon=' + geoLon + '&cnt=40&units=imperial&appid=' + forecastKey;
-                            // console.log(nextWeatherURL);
 
                             fetch(nextWeatherURL, {
-    
                             })
                             .then(function (response) {
                                 return response.json();
@@ -179,20 +151,16 @@ search.addEventListener("click", function() {
                             .then(function (nextWeather) {
                                 fiveCards.innerHTML="";
                                 var forecastArray = nextWeather.list
-                                // console.log(forecastArray)
                                 //iterate every 8 items in the list array inside the API to get data in 12 hour increments
                                 for(let i = 5; i < forecastArray.length; i += 8) {
                                     //date, icon, temp, windspeed, humidity
                                     var date = forecastArray[i].dt_txt;
-
                                     var icon = forecastArray[i].weather[0].icon;
                                     var iconURL = "https://openweathermap.org/img/wn/" + icon + ".png";
-
                                     var temp = forecastArray[i].main.temp;
                                     var windspeed = forecastArray[i].wind.speed;
                                     var humi = forecastArray[i].main.humidity;
-                                    // console.log(date, icon, temp, windspeed, humi);
-
+                                    
                                     var cardDate = document.createElement('div');
                                     cardDate.textContent = "Date: " + date.slice(5, 10);
                                     fiveCards.appendChild(cardDate);

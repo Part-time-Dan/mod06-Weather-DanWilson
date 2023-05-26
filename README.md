@@ -12,7 +12,7 @@ Objectives:
 - Clicking in the search history should bring up that city's information again
 
 
-## Issue
+## Issues
 
 As of deployment, the search history buttons returning a new query is not functional. Working to add this feature.
 
@@ -27,9 +27,13 @@ Visit the site here [Wilson's Wild Weather](https://part-time-dan.github.io/)
 
 Simply type the name of a city and using the cursor, click on the "search" button to return the results. If no input is detected, the app will display an alert.
 
-## License
+## Third Party Tools
 
 Free API tools with limited calls provided by [OpenWeather](https://openweathermap.org/api)
+
+## License
+
+N/A
 
 ## Deploy Git Page Screenshot
 

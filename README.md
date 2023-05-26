@@ -23,7 +23,7 @@ N/A
 
 ## Usage
 
-Visit the site here [Wilson's Wild Weather](https://part-time-dan.github.io/)
+Visit the site here [Wilson's Wild Weather](https://part-time-dan.github.io/mod06-Weather-DanWilson/?)
 
 Simply type the name of a city and using the cursor, click on the "search" button to return the results. If no input is detected, the app will display an alert.
 
@@ -37,4 +37,4 @@ N/A
 
 ## Deploy Git Page Screenshot
 
-![Image of deployed weather dashboard](./assets/Images/)
+![Image of deployed weather dashboard](./assets/Images/WeatherApp.PNG)

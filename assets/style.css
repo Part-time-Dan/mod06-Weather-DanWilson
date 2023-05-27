@@ -31,6 +31,13 @@ header {
     color: black;
     margin-top: 4px;
     min-width: 100%;
+    /* set buttons to visible to override city-list invisible */
+    visibility: visible;
+}
+
+/* set list element invisible so on clicks don't bubble outside buttons */
+#city-list {
+    visibility: hidden;
 }
 
 h2 {

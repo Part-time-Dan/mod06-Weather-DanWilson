@@ -39,9 +39,9 @@ Open the console to view the search history array and verify it is updating, but
 
 ## Third Party Tools
 
-Free API tools with limited calls provided by [OpenWeather](https://openweathermap.org/api).
-[Day.js](https://day.js.org/) used for some date formatting shown in weather cards.
-And [Bootstrap](https://getbootstrap.com/) was used for formatting, layout and all sidebar styling.
+- Free API tools with limited calls provided by [OpenWeather](https://openweathermap.org/api).
+- [Day.js](https://day.js.org/) used for some date formatting shown in weather cards.
+- And [Bootstrap](https://getbootstrap.com/) was used for formatting, layout and all sidebar styling.
 
 ## License
 

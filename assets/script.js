@@ -1,6 +1,7 @@
-var weatherKey = '9288aa53ce4e292ae8cd48bfe4aca237';
-var cityKey = 'fae3c5fec4629e3f1859b40e71eeda8b';
-var forecastKey = '76203aa5c955cbdf7bbea376e95150eb';
+// var weatherKey = '9288aa53ce4e292ae8cd48bfe4aca237'; 
+// var cityKey = 'fae3c5fec4629e3f1859b40e71eeda8b'; 
+// var forecastKey = '76203aa5c955cbdf7bbea376e95150eb'; 
+// keys deactivated 
 
 var cities = [];
 

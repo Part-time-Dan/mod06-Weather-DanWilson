@@ -1,5 +1,7 @@
 # mod06-Weather App-DanWilson
 
+## IMPORTANT! API Keys are deactivated. Deployed site will not fetch weather forecasts!
+
 ## Description
 Module 06 challenge for bootcamp to create a dynamic weather app that searches by city and returns the current weather and a 5 day forecast.
 
